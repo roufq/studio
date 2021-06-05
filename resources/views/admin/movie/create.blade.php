@@ -46,10 +46,10 @@
                     <div class="form-group form-float">
                         <div class="form-line">
                             <input
-                                type="number" class="form-control" id="minute_length" name="minute_length" required="required">
+                                type="text" class="form-control finish" id="finish" name="minute_length" min="10" max="200" required="required">
                             <label class="form-label">Minute length</label>
+                            <input type="text" class="help-info" id="info" style="border:hidden;">
                         </div>
-                            <label class="form-label" id="hours"></label>
                     </div>
                     <div class="form-group form-float">
                         <div class="form-line">
@@ -68,23 +68,13 @@
 @push('js')
 <script>
    $(document).ready(function(){
-
-    $("#minute_length").on('change',function(){
-        var minute = $(this).val();
-        var hours = minute / 60;
-        var vHours = hours.toFixed(2);
-        var min = '';
-
-        if (hours < 1) {
-            var min = 'Waktu kurang dari ';
-            var vHours = 1;
-        }else{
-            var min = 'Waktu ';
-        }
-        
-        $('#hours').text(min+vHours+' jam');
+    $(".finish").on('change',function(){
+        // var hours = perseInt(this.val())/60;
+        var jam = $(this).val();
+        var hours = Math.floor(jam / 60);
+        var minuts = jam % 60;
+        $('#info').val(hours + ' jam' + minuts + ' minuts');
   });
 });
-
 </script>
 @endpush
