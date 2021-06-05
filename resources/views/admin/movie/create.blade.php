@@ -68,9 +68,7 @@
 @push('js')
 <script>
    $(document).ready(function(){
-
     $(".finish").on('change',function(){
-
         // var hours = perseInt(this.val())/60;
         var jam = $(this).val();
         var hours = Math.floor(jam / 60);
@@ -78,6 +76,5 @@
         $('#info').val(hours + ' jam' + minuts + ' minuts');
   });
 });
-
 </script>
 @endpush
