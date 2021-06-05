@@ -97,10 +97,13 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/datejs/1.0/date.min.js" integrity="sha512-/n/dTQBO8lHzqqgAQvy0ukBQ0qLmGzxKhn8xKrz4cn7XJkZzy+fAtzjnOQd5w55h4k1kUC+8oIe6WmrGUYwODA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
 	$('document').ready(function(){
+		// Membuat tampungan data di variable yang nantinya variable akan di isi dengan data saat proses
+		// data default 0
 		var movie_duration = 0;
 		var additional_friday_price = 0;
 		var additional_saturday_price = 0;
 		var additional_sunday_price = 0;
+
 		$('#movie_id').on('change', function(){
 			var movie_id = $(this).val();
 			$.ajax({
@@ -109,6 +112,8 @@
 				success: function(data){
 					console.log(data);
 					$('#minute').val(data.minute_length);
+
+					// Mengisi variable movie_duration dengan data dari database
 					movie_duration = data.minute_length;
 				}
 			});
@@ -123,6 +128,7 @@
 					console.log(data);
 					$('#basic_price').val(data.basic_price);
 
+					// Mengisi variable additional_friday_price dan variable lain dengan data dari database
 					additional_friday_price = data.additional_friday_price;
 					additional_saturday_price = data.additional_saturday_price;
 					additional_sunday_price = data.additional_sunday_price;
@@ -133,22 +139,31 @@
 		$("input").change(function(){
 			var waktuMulai = $('#start').val(),
 			waktuSelesai = $('#end').val(),
+			// variable menit mengambil data dari variable movie_duration 
 			minutes = movie_duration;
 
 			// Codingan kanggo input end
+			// check jika data variable menit dibawah 0
 			if (minutes <= 0) {
 				alert('Movie minute not defind');
 			}
+
+			// mengubah input tanggal #start menjadi format time
 			var startDate = new Date(waktuMulai).getTime();
+			// proses menambah waktu dengan minute kemudian di ubah ke format yang competible untuk input #end
 			var endDate = new Date(startDate + minutes*60000).toString('yyyy-MM-ddThh:mm');
 			$('#end').val(endDate);
 
 			// Codingan kanggo add price
+			// mengubah format #start menjadi format date
 			var dateInput = new Date(waktuMulai);
+
+			// nge cek hari, return true or false
 			var friday = dateInput.is().friday();
 			var saturday = dateInput.is().saturday();
 			var sunday = dateInput.is().sun();
 
+			// ini nge if
 			if(friday){
 				$('#add-price').val(additional_friday_price);
 			}else if(saturday){
