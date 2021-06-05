@@ -75,7 +75,7 @@
 					</div>
 					<div class="form-group form-float">
 						<div class="form-line">
-							<input type="text" class="form-control" id="firday" name="tambahan"required>
+							<input type="text" class="form-control" id="add-price" name="tambahan"required>
 							<label class="form-label">Add Price</label>
 						</div>
 					</div>
@@ -98,6 +98,9 @@
 <script>
 	$('document').ready(function(){
 		var movie_duration = 0;
+		var additional_friday_price = 0;
+		var additional_saturday_price = 0;
+		var additional_sunday_price = 0;
 		$('#movie_id').on('change', function(){
 			var movie_id = $(this).val();
 			$.ajax({
@@ -111,22 +114,6 @@
 			});
 		})
 
-		$("input").change(function(){
-			var waktuMulai = $('#start').val(),
-			waktuSelesai = $('#end').val(),
-			minutes = movie_duration;
-
-			if (minutes <= 0) {
-				alert('Movie minute not defind');
-			}
-
-			var startDate = new Date(waktuMulai).getTime();
-
-			var endDate = new Date(startDate + minutes*60000).toString('yyyy-MM-ddThh:mm');
-
-			$('#end').val(endDate);
-		});
-
 		$('#studio_id').on('change', function(){
 			var studio_id = $(this).val();
 			$.ajax({
@@ -135,14 +122,48 @@
 				success: function(data){
 					console.log(data);
 					$('#basic_price').val(data.basic_price);
+
+					additional_friday_price = data.additional_friday_price;
+					additional_saturday_price = data.additional_saturday_price;
+					additional_sunday_price = data.additional_sunday_price;
 				}
 			});
 		})
 
+		$("input").change(function(){
+			var waktuMulai = $('#start').val(),
+			waktuSelesai = $('#end').val(),
+			minutes = movie_duration;
+
+			// Codingan kanggo input end
+			if (minutes <= 0) {
+				alert('Movie minute not defind');
+			}
+			var startDate = new Date(waktuMulai).getTime();
+			var endDate = new Date(startDate + minutes*60000).toString('yyyy-MM-ddThh:mm');
+			$('#end').val(endDate);
+
+			// Codingan kanggo add price
+			var dateInput = new Date(waktuMulai);
+			var friday = dateInput.is().friday();
+			var saturday = dateInput.is().saturday();
+			var sunday = dateInput.is().sun();
+
+			if(friday){
+				$('#add-price').val(additional_friday_price);
+			}else if(saturday){
+				$('#add-price').val(additional_saturday_price);
+			}else if (sunday) {
+				$('#add-price').val(additional_sunday_price);
+			}else {
+				$('#add-price').val(0);
+			}
+		});
+
 		$('#basic_price').on('click', function(){
-			var firday = $('#firday').val();
+			var addPrice = $('#add-price').val();
 			var basic_price = $(this).val();
-			var amount = parseInt(basic_price) + parseInt(firday);
+			var amount = parseInt(basic_price) + parseInt(addPrice);
 			$('#price').val(amount);
 		})
 	})
