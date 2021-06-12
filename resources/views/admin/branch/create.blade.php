@@ -18,16 +18,27 @@
                     <div class="body">
                         <form id="form_advanced_validation" action="{{route('branch.store')}}" method="POST">
                         {{csrf_field()}}
+                            @if ($errors->has('name'))
+                                <div class="alert alert-danger">
+                                    {{$errors->first('name')}}
+                                </div>
+                            @endif
                             <div class="form-group form-float">
                                 <div class="form-line">
-                                    <input type="text" class="form-control" name="name"required>
+                                
+                                    <input type="text" class="form-control" name="name" required>
                                     <label class="form-label">Name</label>
+                                    <label for="" class="help-info">Input hanya boleh huruf a-z tanpa spasi!</label>
                                 </div>
                             </div>
-                            <button class="btn btn-raised btn-primary waves-effect" type="submit">SUBMIT</button>
+                            
+                            <button class="btn btn-raised btn-primary waves-effect"  type="submit">SUBMIT</button>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
 @endsection
+@push('js')
+
+@endpush

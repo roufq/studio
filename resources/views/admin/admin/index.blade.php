@@ -1,5 +1,5 @@
 @extends('admin.home')
-@section('title', 'users')
+@section('title', 'admin')
 @push('css')
 <link rel="stylesheet" href="{{asset('assets/plugins/jquery-datatable/dataTables.bootstrap4.min.css')}}">
 
@@ -11,7 +11,7 @@
                     <div class="header">
                         <h2> EXPORTABLE TABLE </h2>
                         <ul class="header-dropdown">
-                        <li><a href="{{route('users.create')}}"><i class="zmdi zmdi-add">Add users</i></a></li>
+                        <li><a href="{{route('admin.create')}}"><i class="zmdi zmdi-add">Add admin</i></a></li>
                         </ul>
                     </div>
                     <div class="body">
@@ -33,14 +33,14 @@
                                 </tr>
                             </tfoot>
                             <tbody>
-                                @foreach($users as $row)
+                                @foreach($admin as $row)
                                 <tr>
                                     <td>{{$loop->iteration}}</td>
                                     <td>{{$row->name}}</td>
                                     <td>{{$row->email}}</td>
                                     <td>
-                                        <a href="{{route('users.edit',$row->id)}}" class="btn btn-sm btn-primary demo-google-material-icon"><i class="material-icons">create</i></a>
-                                        <a href="{{url('admin/users/destroy',$row->id)}}" onclick="return confirm('apa kamu serius?')" class="btn btn-sm btn-danger demo-google-material-icon"><i class="material-icons">delete</i></a>
+                                        <a href="{{route('admin.edit',$row->id)}}" class="btn btn-sm btn-primary demo-google-material-icon"><i class="material-icons">create</i></a>
+                                        <a href="{{url('admin/admin/destroy',$row->id)}}" onclick="return confirm('apa kamu serius?')" class="btn btn-sm btn-danger demo-google-material-icon"><i class="material-icons">delete</i></a>
                                     </td>
                                 </tr>
                                 @endforeach

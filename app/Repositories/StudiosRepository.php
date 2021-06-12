@@ -1,37 +1,49 @@
 <?php
 namespace App\Repositories;
 
-use App\Models\Branches;
 use App\Models\Studios;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 
 class StudiosRepository extends Studios
 {
+    public static function show(){
+        return  DB::table('studios')
+            ->join('branches', 'studios.branch_id','=', 'studios.id')
+            ->get();
+    }
     // TODO : Make you own query methods
     public static function add(Request $request){
-        $data = new Studios();
-        $data->name = $request->get('name');
-        $data->branch_id = $request->get('branch_id');
-        $data->basic_price = $request->get('basic_price');
-        $data->additional_friday_price = $request->get('additional_friday_price');
-        $data->additional_saturday_price = $request->get('additional_saturday_price');
-        $data->additional_sunday_price = $request->get('additional_sunday_price');
-        $data->save();
+        DB::table('studios')->insert([
+            'name' => $request->name,
+            'branch_id' => $request->branch_id,
+            'basic_price' => $request->basic_price,
+            'additional_friday_price' => $request->additional_friday_price,
+            'additional_saturday_price' => $request->additional_saturday_price,
+            'additional_sunday_price' => $request->additional_sunday_price,
+        ]);
     }
 
     public static function updatedata(Request $request, $id){
-        $data = Studios::findById($id);
-        $data->name = $request->get('name');
-        $data->branch_id = $request->get('branch_id');
-        $data->basic_price = $request->get('basic_price');
-        $data->additional_friday_price = $request->get('additional_friday_price');
-        $data->additional_saturday_price = $request->get('additional_saturday_price');
-        $data->additional_sunday_price = $request->get('additional_sunday_price');
-        $data->save();
+        DB::table('studios')->where('id', $id)->update([
+            'name' => $request->name,
+            'branch_id' => $request->branch_id,
+            'additional_friday_price' => $request->additional_friday_price,
+            'additional_saturday_price' => $request->additional_saturday_price,
+            'additional_sunday_price' => $request->additional_sunday_price,
+        ]);
     }
 
     public static function deletedata($id){
-        Studios::deleteById($id);
+        DB::table('studios')->where('id', $id)->delete();
+    }
+
+    public static function findAllByBranchId($branchId){
+        return DB::table('studios')->where('branch_id', $branchId)->get();
+    }
+
+    public static function deleteByBranchId($branch_id){
+        DB::table('studios')->where('branch_id', $branch_id)->delete();
     }
 }

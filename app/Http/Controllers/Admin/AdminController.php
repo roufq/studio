@@ -16,8 +16,8 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $data['admin'] = Admins::latest();
-        return view('admin.admin.index');
+        $data['admin'] = AdminsRepository::show();
+        return view('admin.admin.index', $data);
     }
 
     /**
@@ -27,7 +27,7 @@ class AdminController extends Controller
      */
     public function create()
     {
-        return redirect('admin/admin');
+        return view('admin.admin.create');
     }
 
     /**
@@ -38,6 +38,11 @@ class AdminController extends Controller
      */
     public function store(Request $request)
     {
+        $validasi = $request->validate([
+            'name' => 'min:4',
+            'email' => 'unique:users,email',
+            'password' => 'min:6',
+        ]);
         AdminsRepository::adddata($request);
         return redirect('admin/admin');
     }

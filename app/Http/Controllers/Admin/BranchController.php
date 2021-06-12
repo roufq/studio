@@ -5,13 +5,16 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Branches;
 use App\Repositories\BranchesRepository;
+use App\Repositories\SchedulesRepository;
+use App\Repositories\StudiosRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class BranchController extends Controller
 {
     public function index()
     {
-        $data['branche'] = Branches::latest();
+        $data['branche'] = DB::table('branches')->get();
         return view('admin.branch.index', $data);
     }
 
@@ -33,6 +36,10 @@ class BranchController extends Controller
      */
     public function store(Request $request)
     {
+        $validasi = $request->validate([
+            'name' => "required|min:3",
+            'umur' => "min:5",
+        ]);
         BranchesRepository::add($request);
         return redirect('admin/branch');
     }
@@ -82,7 +89,16 @@ class BranchController extends Controller
      */
     public function destroy($id)
     {
-        BranchesRepository::deletedata($id);
+        $studios = StudiosRepository::findAllByBranchId($id);
+        foreach($studios as $studio)
+        {
+            SchedulesRepository::deleteByStudioId($studio->id);
+            // StudiosRepository::deleteById($studio->id);
+        }
+        // dd('ok');
+        StudiosRepository::deleteByBranchId($id);
+        BranchesRepository::deleteById($id);
         return redirect('admin/branch');
     }
+    
 }

@@ -40,12 +40,12 @@
                                 @foreach($schedule as $row)
                                 <tr>
                                     <td>{{$loop->iteration}}</td>
-                                    <td>{{$row->movie->name}}</td>
-                                    <td>{{$row->studio->name}}</td>
+                                    <td>{{$row->movie_name}}</td>
+                                    <td>{{$row->studio_name}}</td>
                                     <td>{{$row->start}} - {{$row->end}}</td>
                                     <td>{{$row->price}}</td>
                                     <td>
-                                        <a href="{{route('admin.schedule.edit',$row->id)}}" class="btn btn-sm btn-primary demo-google-material-icon"><i class="material-icons">create</i></a>
+                                        <a href="{{route('schedule.edit',$row->id)}}" class="btn btn-sm btn-primary demo-google-material-icon"><i class="material-icons">create</i></a>
                                         <a href="{{url('admin/schedule/destroy',$row->id)}}" onclick="return confirm('apa kamu serius?')" class="btn btn-sm btn-danger demo-google-material-icon"><i class="material-icons">delete</i></a>
                                     </td>
                                 </tr>

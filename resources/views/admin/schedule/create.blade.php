@@ -24,7 +24,6 @@
 			<div class="body">
 				<form id="form_advanced_validation" action="{{route('schedule.store')}}" method="POST">
 					{{csrf_field()}}
-
 					<div class="form-group form-float">
 						<p> <b>Id movie</b> </p>
 						<select class="form-control show-tick" name="movie_id" id="movie_id" required>
@@ -37,7 +36,7 @@
 					<div class="form-group form-float">
 						<p> <b>Duration Minute</b> </p>
 						<div class="form-line">
-							<input type="text" class="form-control"  id="minute">
+							<input type="text" class="form-control" disabled id="minute">
 						</div>
 					</div>
 					<div class="form-group form-float">
@@ -63,25 +62,19 @@
 					</div>
 					<div class="form-group form-float">
 						<div class="form-line">
-							<input type="text" class="form-control" id="finish" name="finish"required>
-							<label class="form-label">selisih</label>
-						</div>
-					</div>
-					<div class="form-group form-float">
-						<div class="form-line">
-							<input type="text" class="form-control" id="basic_price" name="price"required>
+							<input type="text" class="form-control" id="basic_price" disabled name="price"required>
 							<label class="form-label">Basic price</label>
 						</div>
 					</div>
 					<div class="form-group form-float">
 						<div class="form-line">
-							<input type="text" class="form-control" id="add-price" name="tambahan"required>
+							<input type="text" class="form-control" id="add-price" disabled name="tambahan"required>
 							<label class="form-label">Add Price</label>
 						</div>
 					</div>
 					<div class="form-group form-float">
 						<div class="form-line">
-							<input type="text" class="form-control" id="price" name="price"required>
+							<input type="text" class="form-control" id="price" name="price" required>
 							<label class="form-label">price</label>
 						</div>
 					</div>
@@ -160,9 +153,9 @@
 			}
 		});
 
-		$('#basic_price').on('click', function(){
+		$('#start').on('change', function(){
 			var addPrice = $('#add-price').val();
-			var basic_price = $(this).val();
+			var basic_price = $('#basic_price').val();
 			var amount = parseInt(basic_price) + parseInt(addPrice);
 			$('#price').val(amount);
 		})

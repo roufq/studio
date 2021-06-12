@@ -22,7 +22,7 @@
                                 <div class="form-line">
                                     <input type="text" class="form-control" value="{{$users->name}}"  maxlength="20" minlength="4" name="name"required>
                                     <label class="form-label">Name</label>
-                                    <label class="help-info"> Min. 4, Max. 20 characters </label>
+                                    <label class="help-info"> Min. 4, Max. 20 characters,Input hanya boleh huruf a-z tanpa spasi! </label>
                                 </div>
                             </div>
                             <div class="form-group form-float">
@@ -36,7 +36,7 @@
 
                             <div class="form-group form-float">
                                 <div class="form-line">
-                                    <input type="password" id="password" maxlength="15" minlength="6" class="form-control" name="passowrd"required>
+                                    <input type="password" id="password" maxlength="15" minlength="6" class="form-control" name="password"required>
                                     <label class="form-label">Password</label>
                                     <label class="help-info"> Min. 6, Max. 15 characters </label>
                                 </div>

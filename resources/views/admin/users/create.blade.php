@@ -18,25 +18,31 @@
                     <div class="body">
                         <form id="form_advanced_validation" action="{{route('users.store')}}" method="POST">
                         {{csrf_field()}}
+                            @if(count($errors) > 0)
+                                <div class="alert alert-danger">
+                                    @foreach($errors->all() as $error)
+                                        <li>{{$error}}</li>
+                                    @endforeach
+                                </div>
+                            @endif
                             <div class="form-group form-float">
                                 <div class="form-line">
-                                    <input type="text" class="form-control" maxlength="20" minlength="4" name="name"required>
+                                    <input type="text" class="form-control" name="name" required>
                                     <label class="form-label">Name</label>
-                                    <label class="help-info"> Min. 4, Max. 20 characters </label>
+                                    <label class="help-info"> Min. 3, Max. 20 characters</label>
                                 </div>
                             </div>
                             <div class="form-group form-float">
                                 <div class="form-line">
-                                    <input type="Email" class="form-control" name="email"required>
+                                    <input type="Email" class="form-control" name="email" required>
                                     <label class="form-label">Email</label>
                                     <label class="help-info"> example@gmail.com </label>
                                 </div>
                             </div>
-                            <input type="checkbox" value="show" onclick="myFunction()">
 
                             <div class="form-group form-float">
                                 <div class="form-line">
-                                    <input type="password" id="password" maxlength="15" minlength="6" class="form-control" name="passowrd"required>
+                                    <input type="password" id="password" class="form-control" name="password" required>
                                     <label class="form-label">Password</label>
                                     <label class="help-info"> Min. 6, Max. 15 characters </label>
                                 </div>
@@ -47,16 +53,5 @@
                 </div>
             </div>
         </div>
+<!-- limit input maxlength="15" minlength="6"  -->
 @endsection
-@push('js')
-<script>
-function myFunction() {
-  var x = document.getElementById("password");
-  if (x.type === "password") {
-    x.type = "text";
-  } else {
-    x.type = "password";
-  }
-}
-</script>
-@endpush

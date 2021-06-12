@@ -1,4 +1,4 @@
-@extends('home')
+@extends('admin.home')
 @section('content')
 <div class="row clearfix">
             <div class="col-lg-12 col-md-12 col-sm-12">
@@ -16,12 +16,13 @@
                         </ul>
                     </div>
                     <div class="body">
-                        <form id="form_advanced_validation" action="{{route('admin.branch.update',$branch->id)}}" method="POST">
+                        <form id="form_advanced_validation" action="{{route('branch.update',$branch->id)}}" method="POST">
                         @csrf
                             <div class="form-group form-float">
                                 <div class="form-line">
-                                    <input type="text" class="form-control" value="{{$branch->name}}" name="name" required>
+                                    <input type="text" class="form-control" pattern="[a-zA-Z]+" autofocus value="{{$branch->name}}" name="name" required>
                                     <label class="form-label">Name</label>
+                                    <label for="" class="help-info">Input hanya boleh huruf a-z tanpa spasi!</label>
                                 </div>
                             <button class="btn btn-raised btn-primary waves-effect" type="submit">SUBMIT</button>
                         </form>

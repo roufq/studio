@@ -24,10 +24,20 @@
                     <div class="body">
                         <form id="form_advanced_validation" action="{{route('studio.store')}}" method="POST">
                         {{csrf_field()}}
+                            @if(count($errors) > 0)
+                                <div class="alert alert-danger">
+                                    <ul>
+                                        @foreach($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
                             <div class="form-group form-float">
                                 <div class="form-line">
                                     <input type="text" class="form-control" name="name" required>
                                     <label class="form-label">Name</label>
+                                    <label for="" class="help-info">Input hanya boleh huruf a-z tanpa spasi!</label>
                                 </div>
                             </div>
                             <div class="form-group form-float">

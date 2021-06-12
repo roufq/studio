@@ -33,7 +33,7 @@
             <div class="body">
                 <form
                     id="form_advanced_validation"
-                    action="{{route('admin.movie.update',$movie->id)}}"
+                    action="{{route('movie.update',$movie->id)}}"
                     method="POST"
                     enctype="multipart/form-data">
                     @csrf
@@ -44,23 +44,17 @@
                                 class="form-control"
                                 value="{{$movie->name}}"
                                 name="name"
+                                pattern="[a-zA-Z]+" 
+                                autofocus
                                 required="required">
                             <label class="form-label">Name</label>
                         </div>
                     </div>
                     <div class="form-group form-float">
                         <div class="form-line">
-                            <input
-                                type="text"
-                                class="form-control"
-                                name="minute_length"
-                                value="{{$movie->minute_length}}"
-                                min="10"
-                                max="200"
-                                id="finish"
-                                required="required">
+                        <input type="number" class="form-control finish" id="finish" value="{{$movie->minute_length}}" name="minute_length" min="10" max="200" required="required">
                             <label class="form-label">Minute length</label>
-                            <label for="help-info" id="info"></label>
+                            <label for="" class="help-info" id="info"></label>
                         </div>
                     </div>
                     <div class="dz-message">
@@ -71,7 +65,7 @@
                         <img src="{{asset('storage/'.$movie->picture_url)}}" width="10%" alt=""></td>
                     @endif
                     <div class="fallback">
-                        <input type="file" name="picture_url" id="picture_url">
+                        <input type="file" name="picture_url" id="picture_url" value="{{$movie->picture_url}}" required placeholder="new picture">
                     </div>
                     <button class="btn btn-raised btn-primary waves-effect" type="submit">SUBMIT</button>
                 </form>
@@ -82,16 +76,14 @@
 @endsection
 @push('js')
 <script>
-      $(document).ready(function(){
-
-$(".finish").on('change',function(){
-
-    // var hours = perseInt(this.val())/60;
-    var jam = $(this).val();
-    var hours = Math.floor(jam / 60);
-    var minuts = jam % 60;
-    $('#info').val(hours + ' jam' + minuts + ' minuts');
-});
+$(document).ready(function(){
+    $(".finish").on('change',function(){
+        // var hours = perseInt(this.val())/60;
+        var jam = $(this).val();
+        var hours = Math.floor(jam / 60);
+        var minuts = jam % 60;
+        $('#info').val(hours + ' jam' + minuts + ' minuts');
+  });
 });
 
 </script>

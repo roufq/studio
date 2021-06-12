@@ -16,7 +16,7 @@ class UsersController extends Controller
      */
     public function index()
     {
-        $data['users'] = Users::latest();
+        $data['users'] = UsersRepository::showdata();
         return view('admin.users.index',$data);
     }
 
@@ -38,6 +38,11 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
+        $validasi = $request->validate([
+            'name' => 'min:4',
+            'email' => 'unique:users,email',
+            'password' => 'min:6',
+        ]);
         UsersRepository::adddata($request);
         return redirect('admin/users');
 

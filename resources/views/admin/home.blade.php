@@ -168,7 +168,16 @@
                     <li class="footer"><a href="javascript:void(0);">View All Tasks</a></li>
                 </ul>
             </li>            
-            <li><a href="sign-in.html" class="mega-menu xs-hide" data-close="true"><i class="zmdi zmdi-power"></i></a></li>
+           
+            <li> <a class="dropdown-item" href="{{ route('admin.logout') }}"
+                                       onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                        <i class="zmdi zmdi-power"></i>
+                                    </a>
+
+                                    <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" class="d-none">
+                                        @csrf
+                                    </form></li>
             <li><a href="javascript:void(0);" class="js-right-sidebar" data-close="true"><i class="zmdi zmdi-settings zmdi-hc-spin"></i></a></li>
         </ul>
     </div>

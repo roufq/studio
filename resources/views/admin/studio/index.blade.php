@@ -45,7 +45,7 @@
                                 <tr>
                                     <td>{{$loop->iteration}}</td>
                                     <td>{{$row->name}}</td>
-                                    <td>{{$row->branch->name}}</td>
+                                    <td>{{$row->branch_name}}</td>
                                     <td>{{$row->basic_price}}</td>
                                     <td>{{$row->additional_friday_price}}</td>
                                     <td>{{$row->additional_saturday_price}}</td>

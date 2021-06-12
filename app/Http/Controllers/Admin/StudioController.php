@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Branche;
 use App\Models\Branches;
 use App\Models\Studios;
+use App\Repositories\BranchesRepository;
+use App\Repositories\SchedulesRepository;
 use App\Repositories\StudiosRepository;
 use Illuminate\Http\Request;
 use App\Studio;
@@ -18,8 +20,10 @@ class StudioController extends Controller
      */
     public function index()
     {
-        $data['studio'] = Studios::latest();
-        $data['studio'] = Studio::all();
+        // $data['studio'] = BranchesRepository::show();
+        $data['studio'] = BranchesRepository::branch();
+        // $data['studio'] = Studio::all();
+        // dd($data);
         return view('admin.studio.index', $data);
     }
 
@@ -42,6 +46,13 @@ class StudioController extends Controller
      */
     public function store(Request $request)
     {
+        $validasi = $request->validate([
+            'name' => 'min:4',
+            'basic_price' => 'required|integer|min:10000',
+            'additional_friday_price' => 'required|integer|min:5000',
+            'additional_saturday_price' => 'required|integer|min:5000',
+            'additional_sunday_price' => 'required|integer|min:5000',
+        ]);
         StudiosRepository::add($request);
         return redirect('admin/studio');
     }
@@ -91,6 +102,7 @@ class StudioController extends Controller
      */
     public function destroy($id)
     {
+        SchedulesRepository::deleteByStudioId($id);
         StudiosRepository::deletedata($id);
         return redirect('admin/studio');
     }

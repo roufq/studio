@@ -7,10 +7,12 @@ use App\Models\Movies;
 use App\Models\Schedules;
 use App\Models\Studios;
 use App\Movie;
+use App\Repositories\MoviesRepository;
 use App\Repositories\SchedulesRepository;
 use App\Schedule;
 use App\Studio;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ScheduleController extends Controller
 {
@@ -21,8 +23,9 @@ class ScheduleController extends Controller
      */
     public function index()
     {
-        $data['schedule'] = Schedules::latest();
-        $data['schedule'] = Schedule::all();
+        // $data['schedule'] = Schedules::latest();
+        $data['schedule'] = SchedulesRepository::getAll();
+        // dd($data);
         return view('admin.schedule.index', $data);
     }
 
@@ -58,7 +61,7 @@ class ScheduleController extends Controller
      */
     public function show($id)
     {
-        //
+        
     }
 
     /**
@@ -69,9 +72,13 @@ class ScheduleController extends Controller
      */
     public function edit($id)
     {
-        $data['movie'] = Movie::get();
+        $schedule = Schedules::findById($id);
         $data['studio'] = Studio::get();
-        $data['schedule'] = Schedules::findById($id);
+        $data['studios'] = $schedule->studio();
+        $data['schedule'] = $schedule;
+        $data['movie'] = $schedule->movie();
+        $data['movies'] = Movie::get();
+        // dd($data);
         return view('admin.schedule.edit',$data);
     }
 
@@ -85,6 +92,7 @@ class ScheduleController extends Controller
     public function update(Request $request, $id)
     {
         SchedulesRepository::updatedata($request, $id);
+        
         return redirect('admin/schedule');
     }
 
@@ -96,7 +104,7 @@ class ScheduleController extends Controller
      */
     public function destroy($id)
     {
-        SchedulesRepository::deletedata($id);
+        SchedulesRepository::deleteById($id);
         return redirect('admin/schedule');
     }
 }

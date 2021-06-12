@@ -1,73 +1,83 @@
-@extends('admin.layouts.app')
+<!doctype html>
+<html class="no-js " lang="en">
+<head>
+<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <meta name="description" content="Responsive Bootstrap 4 and web Application ui kit.">
 
-@section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Login') }}</div>
+    <title>:: Nexa :: Sign In</title>
+    <!-- Favicon-->
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <!-- Custom Css -->
+    <link rel="stylesheet" href="{{asset('assets/plugins/bootstrap/css/bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/css/main.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/css/authentication.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/css/color_skins.css')}}">
+</head>
 
-                <div class="card-body">
-                    <form method="POST" action="{{ route('admin.login') }}" aria-label="{{ __('Login') }}">
-                        @csrf
-
-                        <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <div class="col-md-6 offset-md-4">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-
-                                    <label class="form-check-label" for="remember">
-                                        {{ __('Remember Me') }}
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group row mb-0">
-                            <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Login') }}
-                                </button>
-
-                                @if (Route::has('admin.password.request'))
-                                    <a class="btn btn-link" href="{{ route('admin.password.request') }}">
-                                        {{ __('Forgot Your Password?') }}
-                                    </a>
-                                @endif
-                            </div>
-                        </div>
-                    </form>
+<body class="theme-orange">
+<div class="authentication">
+    <div class="card">
+        <div class="body">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="header slideDown">
+                        <div class="logo"><img src="assets/images/logo.png" alt="Nexa"></div>
+                        <h1>Nexa Admin</h1>
+                        <ul class="list-unstyled l-social">
+                            <li><a href="javascript:void(0);"><i class="zmdi zmdi-facebook-box"></i></a></li>
+                            <li><a href="javascript:void(0);"><i class="zmdi zmdi-linkedin-box"></i></a></li>                            
+                            <li><a href="javascript:void(0);"><i class="zmdi zmdi-twitter"></i></a></li>
+                        </ul>
+                    </div>                        
                 </div>
+                <form class="col-lg-12" id="sign_in" action="{{ route('admin.login') }}" aria-label="{{ __('Login') }}" method="POST">
+                @csrf    
+                <h5 class="title">Sign in to your Account</h5>
+                    <div class="form-group form-float">
+                        <div class="form-line">
+                        <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                        @error('email')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                            <label class="form-label">email</label>
+                        </div>
+                    </div>
+                    <div class="form-group form-float">
+                        <div class="form-line">
+                        <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+                        @error('password')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                            <label class="form-label">Password</label>
+                        </div>
+                    </div>
+                    <div>
+                        <input type="checkbox" name="rememberme" id="rememberme" class="filled-in chk-col-cyan">
+                        <label for="rememberme">Remember Me</label>
+                    </div>  
+                    <div class="col-lg-12">
+                        <button type="submit" class="btn btn-raised btn-primary waves-effect">
+                            {{ __('Sign in') }}
+                        </button>
+                    </div>                 
+                </form>              
             </div>
         </div>
     </div>
 </div>
-@endsection
+
+<!-- Jquery Core Js -->
+<script src="{{asset('assets/bundles/libscripts.bundle.js')}}"></script>    
+<script src="{{asset('assets/bundles/vendorscripts.bundle.js')}}"></script>
+<script src="{{asset('assets/bundles/mainscripts.bundle.js')}}"></script>
+</body>
+</html>
+
+
+

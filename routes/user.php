@@ -27,4 +27,7 @@ Route::group(['namespace' => 'User'], function() {
     // Route::get('email/verify', 'Auth\VerificationController@show')->name('user.verification.notice');
     // Route::get('email/verify/{id}/{hash}', 'Auth\VerificationController@verify')->name('user.verification.verify');
     // Route::post('email/resend', 'Auth\VerificationController@resend')->name('user.verification.resend');
+    route::get('shcedul/index', 'ScheduleController@index')->name('user.schedul.index');
+    route::get('detail/{id}','FrontendController@detail')->name('detail');
+
 });

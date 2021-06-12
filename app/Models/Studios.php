@@ -3,6 +3,7 @@ namespace App\Models;
 
 use crocodicstudio\cbmodel\Core\Model;
 use App\Models\Branches;
+use Illuminate\Support\Facades\DB;
 
 class Studios extends Model
 {
@@ -12,8 +13,8 @@ class Studios extends Model
 
     public $primary_key = "id";
 
-	public function branch() {
-		return $this->belongsTo(Branches::class, "branch_id", "id");
+	public function branch(){
+		return DB::table('branches'::class, '$branch_id' , 'id');
 	}
     
 	public $id;

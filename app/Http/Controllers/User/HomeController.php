@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\Movies;
 
 class HomeController extends Controller
 {
@@ -22,6 +23,7 @@ class HomeController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index() {
-        return view('user.home');
+        $data['movie'] = Movies::latest();
+        return view('movie',$data);
     }
 }

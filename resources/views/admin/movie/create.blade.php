@@ -37,16 +37,25 @@
                     method="POST"
                     enctype="multipart/form-data">
                     @csrf
+                    @if(count($errors) > 0)
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                     <div class="form-group form-float">
                         <div class="form-line">
                             <input type="text" class="form-control" name="name" required="required">
                             <label class="form-label">Name</label>
+                            <label for="" class="help-info">tidak boleh ada spasi</label>
                         </div>
                     </div>
                     <div class="form-group form-float">
                         <div class="form-line">
-                            <input
-                                type="text" class="form-control finish" id="finish" name="minute_length" min="10" max="200" required="required">
+                            <input type="number" class="form-control finish" id="finish" name="minute_length" min="10" max="240" required="required">
                             <label class="form-label">Minute length</label>
                             <input type="text" class="help-info" id="info" style="border:hidden;">
                         </div>

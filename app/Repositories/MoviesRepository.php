@@ -4,29 +4,32 @@ use Illuminate\Http\Request;
 
 use App\Models\Movies;
 use App\Models\Schedules;
+use Illuminate\Support\Facades\DB;
 
 class MoviesRepository extends Movies
 {
     // TODO : Make you own query methods
     public static function savedata(Request $request){
-        $data = new Movies();
-        $data->name = $request->get('name');
-        $data->minute_length = $request->get('minute_length');
-        $file = $request->file('picture_url')->store('picture', 'public');
-        $data->picture_url = $file;
-        $data->save();
+        DB::table('movies')->insert([
+            'name' => $request->name,
+            'minute_length' => $request->minute_length,
+            'picture_url' => $request->file('picture_url')->store('picture', 'public'),
+        ]);
     }
- 
+
     public static function editdata(Request $request, $id){
-         $movie = Movies::findById($id);
-         $movie->name = $request->get('name');
-         $movie->minute_length = $request->get('minute_length');
-         $movie->picture_url = $request->file('picture_url')->store('picture', 'public');
-         $movie->save();
+         DB::table('movies')->where('id', $id)->update([
+            'name' => $request->name,
+            'minute_length' => $request->minute_length,
+            'picture_url' => $request->file('picture_url')->store('picture', 'public'),
+         ]);
     }
- 
+
     public static function deletedata($id){
-     $data = Movies::deleteById($id);
-     Schedules::deleteById($id);
+     DB::table('movies')->where('id',$id)->delete();
+     $data = Schedules::deleteById($id);
     }
+    public static function show($idSchedul){
+        return DB::table('movies')->where('minute_length', $idSchedul)->get();
+    } 
 }

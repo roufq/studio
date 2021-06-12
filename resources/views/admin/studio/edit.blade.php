@@ -22,20 +22,21 @@
                         </ul>
                     </div>
                     <div class="body">
-                        <form id="form_advanced_validation" action="{{route('admin.studio.update',$studio->id)}}" method="POST">
+                        <form id="form_advanced_validation" action="{{route('studio.update',$studio->id)}}" method="POST">
                         @csrf
                             <div class="form-group form-float">
                                 <div class="form-line">
-                                    <input type="text" class="form-control" value="{{$studio->name}}" name="name" required>
+                                    <input type="text" class="form-control" value="{{$studio->name}}" pattern="[a-zA-Z]+" autofocus name="name" required>
+                                    <label for="" class="help-info">Input hanya boleh huruf a-z tanpa spasi!</label>
                                 </div>
                             </div>
                             <div class="form-group form-float">
                                 <p> <b>Id branch</b> </p>
                                 <select class="form-control show-tick" name="branch_id" required>
                                     <option value="">---select branch---</option>
-                                    @foreach($branch as $row)
-                                        <option value="{{$row->id}}"> {{$row->name}}  </option>
-                                    @endforeach
+                                    <?php foreach($branch as $row):?>
+                                    <option value="<?php echo $row['id'];?>"<?php if($row['name'] == $row['name']) echo 'selected="selected"' ?>><?php echo $row['name']; ?></option>
+                                    <?php endforeach?>
                                 </select>
                             </div>
                             <div class="form-group form-float">

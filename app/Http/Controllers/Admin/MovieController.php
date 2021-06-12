@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Movies;
 use App\Movie;
 use App\Repositories\MoviesRepository;
+use App\Repositories\SchedulesRepository;
+use Illuminate\Support\Facades\DB;
 
 class MovieController extends Controller
 {
@@ -17,7 +19,7 @@ class MovieController extends Controller
      */
     public function index()
     {
-        $data['movie'] = Movies::latest();
+        $data['movie'] = DB::table('movies')->get();
         return view('admin.movie.index', $data);
     }
 
@@ -39,6 +41,11 @@ class MovieController extends Controller
      */
     public function store(Request $request)
     {
+        $validasi = $request->validate([
+            'name' => 'min:3',
+            'minute_length' => 'max:240',
+            'picture_url' => 'mimes:jpg,jpeg,png|max:2000',
+        ]);
         MoviesRepository::savedata($request);
         return redirect('admin/movie');
     }
@@ -87,8 +94,9 @@ class MovieController extends Controller
      */
     public function destroy($id)
     {
-       MoviesRepository::deletedata($id);
-       return redirect('admin/movie');
+        SchedulesRepository::deleteByMovieId($id);
+        MoviesRepository::deletedata($id);
+        return redirect('admin/movie');
     }
     public function movie($id){
         $movie = Movie::FindOrFail($id);
